@@ -94,7 +94,7 @@ class SEOAnalyzerStreamlit:
                 return config
         return {'search_engine_id': '734633bb3016e4892'}
     
-def load_credentials(self):
+    def load_credentials(self):
     """認証情報読み込み"""
     try:
         # Secretsから読み込み
@@ -2136,6 +2136,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
