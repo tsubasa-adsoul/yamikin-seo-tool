@@ -20,7 +20,7 @@ class SEOAnalyzerStreamlit:
         self.config = self.load_local_config()
         
         self.credentials_file = self.config.get('credentials_file', 'credentials/gemini-analysis-467706-b3196e5deffe.json')
-        self.gemini_api_key = self.config.get('gemini_api_key')
+        self.gemini_api_key = st.secrets.get('gemini_api_key', self.config.get('gemini_api_key', ''))
 
         
         self.scopes = [
@@ -56,8 +56,8 @@ class SEOAnalyzerStreamlit:
                 
                 # ローカルのconfig.jsonからAPI関連の設定を読み込んで追加
                 local_config = self.load_local_config()
-                config['google_api_key'] = local_config.get('google_api_key')
-                config['gemini_api_key'] = local_config.get('gemini_api_key')
+                config['google_api_key'] = st.secrets.get('google_api_key', local_config.get('google_api_key', ''))
+                config['gemini_api_key'] = st.secrets.get('gemini_api_key', local_config.get('gemini_api_key', ''))
                 config['search_engine_id'] = local_config.get('search_engine_id', '734633bb3016e4892')
                 
                 return config

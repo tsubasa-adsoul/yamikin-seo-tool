@@ -1,6 +1,4 @@
 {
-  "gemini_api_key": "AIzaSyA8meCgGFsO9VNztFaGXv2Q39N_vPvonz0",
-  "google_api_key": "AIzaSyC5dKbs0p5aTC_3j5UaNTrW3FlXnTuTwBg",
   "credentials_file": "credentials/gemini-analysis-467706-b3196e5deffe.json",
   "sites": [{
     "name": "闇金データベース",
