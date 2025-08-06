@@ -248,7 +248,42 @@ class SEOAnalyzerStreamlit:
 
     
     def load_analysis_history(self, site_name=None, limit=20):
-        """履歴を読み込み（ローカルのみ）"""
+        """履歴を読み込み（スプレッドシート優先）"""
+        # まずスプレッドシートから試す
+        try:
+            if self.config.get('history_spreadsheet_id'):
+                service = build('sheets', 'v4', credentials=self.credentials)
+                sheet = service.spreadsheets()
+                
+                # データ取得
+                result = sheet.values().get(
+                    spreadsheetId=self.config['history_spreadsheet_id'],
+                    range='分析履歴!A:E'
+                ).execute()
+                
+                values = result.get('values', [])
+                if values and len(values) > 1:  # データがある場合
+                    history = []
+                    for row in values[1:]:  # ヘッダーをスキップ
+                        if len(row) >= 5:
+                            history.append({
+                                'timestamp': row[0],
+                                'keyword': row[1],
+                                'url': row[2],
+                                'mode': row[3],
+                                'analysis': row[4],
+                                'site': '闇金データベース',
+                                'user': 'Streamlit Cloud'
+                            })
+                    
+                    # 新しい順にソート
+                    history.reverse()
+                    return history[:limit]
+                    
+        except Exception as e:
+            st.error(f"スプレッドシート読み込みエラー: {e}")
+        
+        # ローカルファイルにフォールバック
         if not os.path.exists("analysis_log"):
             return []
         
@@ -268,6 +303,7 @@ class SEOAnalyzerStreamlit:
                     continue
         
         return history
+
 
 
 
@@ -2141,6 +2177,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
