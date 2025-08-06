@@ -947,6 +947,11 @@ def main():
         layout="wide"
     )
     
+    # noindex設定を追加
+    st.markdown("""
+        <meta name="robots" content="noindex, nofollow">
+    """, unsafe_allow_html=True)
+    
     st.title("🚀 SEO分析ツール - Streamlit版")
     st.markdown("---")
     
@@ -2177,6 +2182,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
