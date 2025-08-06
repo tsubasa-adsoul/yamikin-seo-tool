@@ -21,6 +21,24 @@ class SEOAnalyzerStreamlit:
         
         self.credentials_file = self.config.get('credentials_file', 'credentials/gemini-analysis-467706-b3196e5deffe.json')
         self.gemini_api_key = "AIzaSyA8meCgGFsO9VNztFaGXv2Q39N_vPvonz0"
+        
+        # デバッグ：ファイルの存在確認
+        st.write("現在のディレクトリ:", os.getcwd())
+        st.write("ファイル一覧:", os.listdir())
+        
+        # credentialsフォルダの確認
+        if os.path.exists('credentials'):
+            st.write("credentialsフォルダ内:", os.listdir('credentials'))
+            st.write("JSONファイル存在:", os.path.exists(self.credentials_file))
+        else:
+            st.error("credentialsフォルダが見つかりません")
+        
+        # 絶対パスも試す
+        abs_path = os.path.join(os.path.dirname(__file__), 'credentials', 'gemini-analysis-467706-b3196e5deffe.json')
+        st.write("絶対パス存在確認:", os.path.exists(abs_path))
+        
+        self.credentials_file = self.config.get('credentials_file', 'credentials/gemini-analysis-467706-b3196e5deffe.json')
+        self.gemini_api_key = "AIzaSyA8meCgGFsO9VNztFaGXv2Q39N_vPvonz0"
 
         
         self.scopes = [
@@ -2130,6 +2148,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
