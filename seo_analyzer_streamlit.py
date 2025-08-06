@@ -197,7 +197,29 @@ class SEOAnalyzerStreamlit:
 
 
     def save_analysis_result(self, keyword, url, analysis, mode):
-        """分析結果を保存（スプレッドシート優先）"""
+        """分析結果を保存（スプレッドシート）"""
+        try:
+            # スプレッドシートに保存
+            if self.config.get('history_spreadsheet_id'):
+                service = build('sheets', 'v4', credentials=self.credentials)
+                sheet = service.spreadsheets()
+                
+                # データ準備
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                values = [[timestamp, keyword, url, mode, analysis]]
+                
+                # 追記
+                body = {'values': values}
+                result = sheet.values().append(
+                    spreadsheetId=self.config['history_spreadsheet_id'],
+                    range='分析履歴!A:E',
+                    valueInputOption='RAW',
+                    body=body
+                ).execute()
+                
+                return f"スプレッドシート保存完了"
+        except Exception as e:
+            st.error(f"保存エラー: {e}")
         
         # ローカル保存（フォールバック）
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -222,6 +244,7 @@ class SEOAnalyzerStreamlit:
             json.dump(data, f, ensure_ascii=False, indent=2)
         
         return f"ローカル保存: {filename}"
+
 
     
     def load_analysis_history(self, site_name=None, limit=20):
@@ -2118,6 +2141,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
