@@ -205,7 +205,7 @@ class SEOAnalyzerStreamlit:
                 sheet = service.spreadsheets()
                 
                 # データ準備
-                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                timestamp = (datetime.now() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M:%S")
                 values = [[timestamp, keyword, url, mode, analysis]]
                 
                 # 追記
@@ -2177,6 +2177,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
