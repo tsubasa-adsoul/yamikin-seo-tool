@@ -97,38 +97,14 @@ class SEOAnalyzerStreamlit:
     def load_credentials(self):
         """認証情報読み込み"""
         try:
-            # デバッグ情報
-            st.info("認証情報を読み込み中...")
-            
-            # Secretsから読み込み
-            if 'gcp_service_account' in st.secrets:
-                st.info("Secretsから認証情報を取得")
-                from google.oauth2 import service_account
-                
-                # Secretsから認証情報を構築
-                credentials_dict = dict(st.secrets["gcp_service_account"])
-                
-                # private_keyの改行を修正
-                if 'private_key' in credentials_dict:
-                    credentials_dict['private_key'] = credentials_dict['private_key'].replace('\\n', '\n')
-                
-                credentials = service_account.Credentials.from_service_account_info(
-                    credentials_dict, scopes=self.scopes
-                )
-                return credentials
-            else:
-                st.warning("Secretsに認証情報がありません。ローカルファイルを使用します。")
-                # ローカルファイルから読み込み（フォールバック）
-                credentials = service_account.Credentials.from_service_account_file(
-                    self.credentials_file, scopes=self.scopes
-                )
-                return credentials
+            # ローカルファイルから直接読む
+            credentials = service_account.Credentials.from_service_account_file(
+                self.credentials_file, scopes=self.scopes
+            )
+            return credentials
         except Exception as e:
             st.error(f"認証エラー: {e}")
-            import traceback
-            st.error(traceback.format_exc())
             return None
-
 
     
     def init_services(self):
@@ -2148,6 +2124,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
