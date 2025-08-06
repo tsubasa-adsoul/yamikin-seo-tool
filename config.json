@@ -1,7 +1,9 @@
 {
   "gemini_api_key": "AIzaSyA8meCgGFsO9VNztFaGXv2Q39N_vPvonz0",
   "google_api_key": "AIzaSyC5dKbs0p5aTC_3j5UaNTrW3FlXnTuTwBg",
-  "credentials_file": "credentials/gemini-analysis-467706-b3196e5deffe.json",
+  "credentials_file": "credentials/gemini-analysis-467706-227a3d20cd55.json",
+  "search_engine_id": "734633bb3016e4892",
+  "history_spreadsheet_id": "1OhD2HS7ncAk-ADToYxabS9fJNtaxSZZSjli85HG22Tw",
   "sites": [{
     "name": "闇金データベース",
     "gsc_url": "https://yamikin-database.jp/",
