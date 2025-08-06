@@ -1537,7 +1537,7 @@ def main():
                                         
                                         st.success("✅ 分析完了！")
                                         st.info(f"📁 保存済み: {saved_file}")
-                                        # st.balloons()
+                                        st.balloons()
 
 
 
@@ -1862,7 +1862,7 @@ def main():
                                         
                                         st.success("✅ 分析完了！")
                                         st.info(f"📁 保存済み: {saved_file}")
-                                        # st.balloons()
+                                        st.balloons()
                                     else:
                                         st.error(f"記事取得エラー: {content['error']}")
                     
@@ -2177,6 +2177,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
