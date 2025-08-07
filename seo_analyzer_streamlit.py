@@ -940,6 +940,29 @@ class SEOAnalyzerStreamlit:
         except Exception as e:
             return f"AI分析エラー: {str(e)}"
 
+def check_auth():
+    """認証画面"""
+    def credentials_entered():
+        if (st.session_state["username"] == "yamikin-database" and 
+            st.session_state["password"] == "K#v8@pL2!zG$"):
+            st.session_state["authenticated"] = True
+        else:
+            st.session_state["authenticated"] = False
+
+    if "authenticated" not in st.session_state:
+        st.text_input("ユーザー名", key="username")
+        st.text_input("パスワード", type="password", key="password")
+        st.button("ログイン", on_click=credentials_entered)
+        return False
+    elif not st.session_state["authenticated"]:
+        st.text_input("ユーザー名", key="username")
+        st.text_input("パスワード", type="password", key="password")
+        st.button("ログイン", on_click=credentials_entered)
+        st.error("認証に失敗しました")
+        return False
+    else:
+        return True
+
 def main():
     st.set_page_config(
         page_title="SEO分析ツール - Streamlit版",
@@ -952,6 +975,10 @@ def main():
         <meta name="robots" content="noindex, nofollow">
     """, unsafe_allow_html=True)
     
+    # 認証チェック（ここに追加！）
+    if not check_auth():
+        st.stop()
+    
     st.title("🚀 SEO分析ツール - Streamlit版")
     st.markdown("---")
     
@@ -960,10 +987,10 @@ def main():
         with st.spinner("初期化中..."):
             st.session_state.analyzer = SEOAnalyzerStreamlit()
 
-        # セッション状態の初期化（この部分を追加）
     # セッション状態の初期化（この部分を追加）
     if 'article_analyses' not in st.session_state:
         st.session_state.article_analyses = []
+
     
     # 競合分析用の初期化も追加
     if 'daily_queries' not in st.session_state:
@@ -2182,6 +2209,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
